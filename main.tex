@@ -1,0 +1,150 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   agents4science_2025.tex (Final English Paper with Complete Results)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt, a4paper, numbers]{report}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{agents4science_2025}
+
+% --- DOCUMENT METADATA ---
+\title{Simulation-Based Analysis of a Hybrid Si$_3$N$_4$ Platform as a Scalable Alternative to Thin-Film Lithium Niobate}
+\author{Your Name}
+\date{\today}
+
+% ============================================================================
+\begin{document}
+% ============================================================================
+
+\maketitle
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ----------------------------------------------------------------------------
+\chapter*{Abstract}
+% ----------------------------------------------------------------------------
+Thin-film lithium niobate (TFLN) is a leading platform for high-performance photonics, yet its scalability is limited by high costs and manufacturing complexity. This work investigates a hybrid alternative based on silicon nitride (Si$_3$N$_4$) using numerical mode analysis. We model waveguide structures that combine a low-loss Si$_3$N$_4$ core with thin films of the electro-optic materials barium titanate (BTO) and aluminum nitride (AlN), and compare them directly to a TFLN-hybrid baseline in the same configuration.
+
+The simulation results for a wavelength of 1.55 µm show that all three hybrid approaches support guided modes. Based on the simulated optical confinement factors, we project the electro-optic efficiency (V$\pi$L). The BTO platform promises an extremely low V$\pi$L of just **0.109 V·cm**, making it over 40 times more efficient than the TFLN-hybrid baseline (**4.59 V·cm**). In contrast, the weak Pockels effect of AlN leads to a projected V$\pi$L of **122.1 V·cm**, which is impractically high. These results quantitatively substantiate the potential of the BTO-hybrid approach as a superior, high-performance, scalable photonics platform while simultaneously revealing the fundamental material limitations of the AlN approach.
+
+% ----------------------------------------------------------------------------
+\chapter{Introduction}
+% ----------------------------------------------------------------------------
+\section{Motivation: The Scalability Gap in Photonics}
+Photonics is on the verge of mass production. While thin-film lithium niobate (TFLN) delivers unparalleled performance in the lab \cite{TFLNreview}, a gap exists between this performance and the requirements for cost-effective, CMOS-compatible, wafer-scale manufacturing. This discrepancy inhibits its widespread adoption in markets such as data communications, sensing, and autonomous driving.
+
+\section{Hypothesis}
+This work tests the hypothesis that a hybrid photonic platform, by combining the low-loss and scalable waveguide technology of Si$_3$N$_4$ with heterogeneously integrated layers of superior EO materials, can overcome the scalability and cost problems of TFLN while achieving a significantly improved performance window.
+
+% ----------------------------------------------------------------------------
+\chapter{Methodology of Numerical Simulation}
+% ----------------------------------------------------------------------------
+\section{Simulation Model}
+To investigate the hypothesis, a 2D finite-difference mode solver (EMpy, VFDModeSolver) is used. The waveguide cross-section is discretized on a numerical grid to solve Maxwell's equations and find the eigenmodes of the structure.
+
+\subsection{Waveguide Geometry}
+The modeled structure, depicted in Chapter 4, is kept identical for all three active materials to ensure a fair comparison. It consists of:
+\begin{itemize}
+    \item \textbf{Substrate:} Silicon dioxide (SiO$_2$, n=1.44) with a thickness of 2.0 µm.
+    \item \textbf{Waveguide Core:} Silicon nitride (Si$_3$N$_4$, n=2.00) with a width of 1.2 µm and a height of 0.3 µm.
+    \item \textbf{Active Layer:} A 0.1 µm thick film of either BTO (n=2.36), AlN (n=2.10), or TFLN (n=2.21) placed directly on the core.
+    \item \textbf{Cladding:} Air (n=1.00).
+\end{itemize}
+The simulation is performed for a wavelength of $\lambda = 1.55$ µm.
+
+\subsection{Analysis Metrics}
+Key metrics are extracted from the simulation results:
+\begin{enumerate}
+    \item \textbf{Effective Refractive Index ($n_{eff}$):} Determines the phase velocity of the guided mode.
+    \item \textbf{Optical Confinement Factor ($\Gamma$):} The percentage of the optical power located within the active EO layer.
+\end{enumerate}
+Based on $\Gamma$, the electro-optic efficiency V$\pi$L is estimated using the formula:
+\begin{equation}
+    V_{\pi}L \approx \frac{\lambda g}{n_{active}^3 r_{eff} \Gamma}
+\end{equation}
+where an electrode gap of $g=1.5$ µm is assumed, and literature values are used for the Pockels coefficient $r_{eff}$ (923 pm/V for BTO, 1.5 pm/V for AlN, and 30.8 pm/V for TFLN).
+
+% ----------------------------------------------------------------------------
+\chapter{Results}
+% ----------------------------------------------------------------------------
+The simulations were successfully performed for the BTO, AlN, and TFLN-based hybrid waveguides. All structures support well-confined guided modes.
+
+\section{Mode Profiles and Refractive Index Structure}
+Figure \ref{fig:profiles} shows the simulated refractive index distribution and the resulting fundamental mode intensity for the two most relevant cases: the BTO challenger and the TFLN baseline. The modes are well-confined within the Si$_3$N$_4$ core and the active layer, enabling strong light-matter interaction. The higher refractive index of BTO leads to a slightly higher effective index and confinement factor.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.48\textwidth]{simulation_intensity_BTO.pdf}
+    \includegraphics[width=0.48\textwidth]{simulation_intensity_TFLN.pdf}
+    \caption{Simulated fundamental mode intensity profiles. Left: The Si$_3$N$_4$+BTO hybrid waveguide ($n_{eff}=1.6814$). Right: The Si$_3$N$_4$+TFLN hybrid baseline ($n_{eff}=1.6481$).}
+    \label{fig:profiles}
+\end{figure}
+
+\section{Quantitative Performance Comparison}
+The key figures of merit extracted and calculated from the simulations are summarized in Table \ref{tab:results}. This table presents a direct comparison based on the console output of the simulation script.
+
+\begin{table}[htbp]
+\caption{Summary of simulation results for the fundamental modes of the three hybrid platforms.}
+\label{tab:results}
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Parameter} & \textbf{Si$_3$N$_4$ + BTO} & \textbf{Si$_3$N$_4$ + TFLN (Baseline)} & \textbf{Si$_3$N$_4$ + AlN} \\
+\midrule
+Eff. Index ($n_{eff}$) & 1.6814 & 1.6481 & 1.6275 \\
+Conf. Factor ($\Gamma$) & 17.64 \% & 15.24 \% & 13.71 \% \\
+\textbf{Proj. V$\pi$L (V·cm)} & \textbf{0.109} & \textbf{4.59} & \textbf{122.1} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------------------
+\chapter{Discussion}
+% ----------------------------------------------------------------------------
+\section{Interpretation of Results}
+The simulation results provide a clear and compelling verdict on the potential of the investigated hybrid platforms.
+
+The most significant finding is the exceptional performance of the hybrid BTO platform. With a projected V$\pi$L of **0.109 V·cm**, it is approximately **42 times more efficient** than the TFLN hybrid baseline (4.59 V·cm). This dramatic improvement is a direct result of BTO's giant Pockels coefficient, which far outweighs the slightly higher optical confinement. Such a performance leap could be transformative, drastically reducing the power consumption of modulators and enabling new applications in energy-critical fields like quantum and neuromorphic computing.
+
+The TFLN hybrid simulation serves as a crucial sanity check. The resulting V$\pi$L of 4.59 V·cm is well within the range of high-performance modulators, validating our simulation model and assumptions. It proves that the hybrid approach with an established material is viable, but it sets a high bar for any challenger.
+
+The AlN platform fails to clear this bar. The projected V$\pi$L of 122.1 V·cm is unusable for high-speed modulation. This result powerfully illustrates that CMOS compatibility and process maturity are secondary virtues if the core physical property—the electro-optic effect—is too weak.
+
+\section{Limitations and Outlook}
+This simulation represents an idealized scenario. The primary factor not included is material absorption loss, which is known to be higher in crystalline oxides like BTO than in Si$_3$N$_4$ or TFLN. Therefore, the practical choice involves a trade-off: the BTO platform offers unparalleled efficiency at the cost of managing potentially higher optical losses, while the TFLN platform provides a robust, lower-risk but less performant solution.
+
+% ----------------------------------------------------------------------------
+\chapter{Conclusion}
+% ----------------------------------------------------------------------------
+This work has demonstrated through a comparative numerical simulation that the choice of active material in a hybrid Si$_3$N$_4$ platform is paramount. The Si$_3$N$_4$+BTO configuration shows the potential for an order-of-magnitude improvement in electro-optic efficiency over a comparable Si$_3$N$_4$+TFLN baseline. In contrast, the Si$_3$N$_4$+AlN configuration is shown to be non-competitive due to its weak intrinsic Pockels effect. These results provide a strong quantitative basis for future experimental work, which should prioritize the integration of high-r-coefficient materials like BTO to unlock the next generation of scalable and ultra-low-power photonic integrated circuits.
+
+% ----------------------------------------------------------------------------
+% BIBLIOGRAPHY
+% ----------------------------------------------------------------------------
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{9}
+\bibitem{TFLNreview}
+C. Wang et al., "Integrated lithium niobate electro-optic modulators operating at CMOS-compatible voltages," \textit{Nature}, 2018.
+
+\bibitem{BTO}
+H. Abdalla et al., "High-performance electro-optic modulation using ferroelectric BaTiO$_3$ on SiN," \textit{Sensors}, 2022.
+
+\bibitem{AlN}
+X. Guo et al., "Aluminum nitride photonic circuits for RF–optical signal processing," \textit{New J. Phys.}, 2012.
+
+\bibitem{SiN}
+A. Gajda et al., "Silicon nitride PICs: ultra-low-loss and broadband," \textit{PhotonDelta Whitepaper}, 2022.
+\end{thebibliography}
+
+% ============================================================================
+\end{document}
+% ============================================================================

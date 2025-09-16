@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agents4Science Submission Checklist",
+  "type": "object",
+  "properties": {
+    "formal": {
+      "type": "object",
+      "properties": {
+        "length_pages": { "type": "integer", "maximum": 8 },
+        "template_used": { "type": "boolean" },
+        "anonymized": { "type": "boolean" },
+        "deadline_respected": { "type": "boolean" }
+      },
+      "required": ["length_pages", "template_used", "anonymized", "deadline_respected"]
+    },
+    "transparency": {
+      "type": "object",
+      "properties": {
+        "ai_contribution_disclosure": { "type": "boolean" },
+        "reproducibility_statement": { "type": "boolean" },
+        "responsible_ai_statement": { "type": "boolean" }
+      },
+      "required": ["ai_contribution_disclosure", "reproducibility_statement", "responsible_ai_statement"]
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "problem_defined": { "type": "boolean" },
+        "hypothesis_falsifiable": { "type": "boolean" },
+        "methodology_reproducible": { "type": "boolean" },
+        "results_included": { "type": "boolean" },
+        "discussion_includes_limitations": { "type": "boolean" },
+        "alternative_theories_compared": { "type": "boolean" },
+        "conclusion_clear": { "type": "boolean" }
+      },
+      "required": [
+        "problem_defined",
+        "hypothesis_falsifiable",
+        "methodology_reproducible",
+        "results_included",
+        "discussion_includes_limitations",
+        "alternative_theories_compared",
+        "conclusion_clear"
+      ]
+    },
+    "facrm_selfcheck": {
+      "type": "object",
+      "properties": {
+        "falsifiability_check_passed": { "type": "boolean" },
+        "fallacy_scan_passed": { "type": "boolean" },
+        "bias_control_done": { "type": "boolean" },
+        "evidence_graded": { "type": "boolean" },
+        "error_analysis_included": { "type": "boolean" }
+      },
+      "required": [
+        "falsifiability_check_passed",
+        "fallacy_scan_passed",
+        "bias_control_done",
+        "evidence_graded",
+        "error_analysis_included"
+      ]
+    },
+    "technical_reproducibility": {
+      "type": "object",
+      "properties": {
+        "code_repository_link": { "type": "string", "format": "uri" },
+        "data_sources_documented": { "type": "boolean" },
+        "model_architecture_described": { "type": "boolean" },
+        "random_seeds_provided": { "type": "boolean" },
+        "independent_reproduction_possible": { "type": "boolean" }
+      },
+      "required": [
+        "code_repository_link",
+        "data_sources_documented",
+        "model_architecture_described",
+        "random_seeds_provided",
+        "independent_reproduction_possible"
+      ]
+    },
+    "post_submission": {
+      "type": "object",
+      "properties": {
+        "optimized_for_ai_review": { "type": "boolean" },
+        "optimized_for_human_review": { "type": "boolean" }
+      },
+      "required": ["optimized_for_ai_review", "optimized_for_human_review"]
+    }
+  },
+  "required": ["formal", "transparency", "content", "facrm_selfcheck", "technical_reproducibility", "post_submission"]
+}
